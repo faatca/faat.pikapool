@@ -26,3 +26,4 @@ docs/_build
 # pydev
 .pydevproject
 .project
+venv

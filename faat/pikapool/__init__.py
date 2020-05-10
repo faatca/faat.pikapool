@@ -60,7 +60,6 @@ except ImportError:
     import Queue as queue
 
 import select
-import socket
 import threading
 import time
 

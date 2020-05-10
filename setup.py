@@ -1,40 +1,36 @@
+from pathlib import Path
 import re
-import setuptools
+from setuptools import setup
+
+here = Path(__file__).parent
 
 
-setuptools.setup(
-    name='pika-pool',
-    version=(
-        re
-        .compile(r".*__version__ = '(.*?)'", re.S)
-        .match(open('pika_pool.py').read())
-        .group(1)
-    ),
-    url='https://github.com/bninja/pika-pool',
-    license='BSD',
-    author='egon',
-    author_email='egon@gb.com',
-    description='Pools for pikas.',
-    long_description=open('README.rst').read(),
-    py_modules=['pika_pool'],
-    include_package_data=True,
-    platforms='any',
-    install_requires=[
-        'pika >=0.9,<0.11',
-    ],
-    extras_require={
-        'tests': [
-            'pytest >=2.5.2,<3',
-            'pytest-cov >=1.7,<2',
-        ],
-    },
+def find_version(path):
+    content = path.read_text(encoding="utf-8")
+    match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", content, re.M)
+    if match:
+        return match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
+
+setup(
+    name="faat.pikapool",
+    version=find_version(here / "faat/pikapool/__init__.py"),
+    description="Pools for pikas.",
+    long_description=(here / "README.md").read_text("utf-8"),
+    long_description_content_type="text/markdown",
+    url="https://github.com/faatca/faat.pikapool",
+    author="Aaron Milner",
+    author_email="aaron.milner@gmail.com",
+    license="BSD",
     classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
         'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+    ],
+    packages=["faat.pikapool"],
+    install_requires=["pika>=1.1.0"],
+    python_requires=">=3.8",
 )
